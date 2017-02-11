@@ -1,38 +1,30 @@
-import { combineReducers, createStore } from 'redux';
+import { applyMiddleware, createStore } from 'redux';
 
-const usersReducer = (state = {}, actions) =>{
-    switch (actions.type) {
-        case "CHANGE_NAME":
-            state = {...state, name: actions.payload}
-            // state.name = actions.payload;
-            break;
-
-        case "CHANGE_AGE":
-            state = { ...state, age:actions.payload }
-            // state.age = actions.payload;
-            break;
+const reducer = (initialState = 0, action)=>{
+    if(action.type === "INC"){
+        return initialState + 1;
+    }else if(action.type === "DEC"){
+        return initialState - 1;
     }
-    return state;
+
+    return initialState;
 }
 
-
-const tutsReducer = function(state = [], actions){
-    
-    return state;
+const logger = (store) => (next)=> (action)=>{
+    console.log("action fired", action);
 }
 
-const reducer = combineReducers({
-    user:usersReducer,
-    tuts:tutsReducer
-})
+const middleware = applyMiddleware(logger);
 
-const store = createStore(reducer,0);
+const store = createStore(reducer,1, middleware);
 
 store.subscribe(()=>{
-    console.log(store.getState());
-    console.log(typeof store.getState());
     console.log("store changed", store.getState())
 })
 
-store.dispatch({type:"CHANGE_NAME", payload:"mathew"});
-store.dispatch({type:"CHANGE_AGE", payload: 28});
+store.dispatch({type:"INC"})
+store.dispatch({type:"INC"})
+store.dispatch({type:"INC"})
+store.dispatch({type:"INC"})
+store.dispatch({type:"DEC"})
+store.dispatch({type:"DEC"})
