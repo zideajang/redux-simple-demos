@@ -23,5 +23,7 @@
     6.1 自定义一个中间件
 
 第七课 异步 actions
+    7.1 thunk
+    7.2 Promise
 
     
