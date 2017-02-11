@@ -48,11 +48,11 @@ store.dispatch((dispatch) =>{
 
     })
 
-    axios.get("http://localhost:4200/user")
+    axios.get("http://localhostkaka:4200/user")
         .then((response) => {
             dispatch({type:"RECEIVE_USERS", payload: response.data})
         })
         .catch((err)=>{
-            dispatch({type:"RECEIVE_USERS", payload:err})
+            dispatch({type:"FETCH_USERS_ERROR", payload:err})
         })
 })
